@@ -13,6 +13,8 @@ import {
   SpeechBubble,
   SaveBtn,
   InputWrapper,
+  InputStatus,
+  InputErrorWrapper,
 } from './styles';
 
 function Chat() {
@@ -49,18 +51,13 @@ function Chat() {
       rating: Yup.number().required('Requirido'),
     }),
     onSubmit: async values => {
-      alert(JSON.stringify(values, null, 2));
-      // eslint-disable-next-line no-console
-      console.log(JSON.stringify(values, null, 2));
       await api
-        .post(JSON.stringify(values, null, 2))
+        .post('users', values)
         .then(response => {
-          // eslint-disable-next-line no-console
-          console.log('responsesss', response.data);
+          alert('Dados enviados com sucesso.', response.data);
         })
         .catch(err => {
-          // eslint-disable-next-line no-console
-          console.log('err', err.message);
+          alert('Ops! Algo deu errado.', err.message);
         });
     },
   });
@@ -84,8 +81,8 @@ function Chat() {
               </div>
             );
           })}
-          <InputWrapper>
-            <label htmlFor="fullName">
+          <InputWrapper status={!formik.errors.fullName}>
+            <InputErrorWrapper>
               <input
                 id="fullName"
                 name="fullName"
@@ -95,11 +92,11 @@ function Chat() {
                 value={formik.values.fullName}
                 placeholder="Nome e sobrenome"
               />
-              <button type="button">teste</button>
-            </label>
-            {formik.touched.fullName && formik.errors.fullName ? (
-              <div>{formik.errors.fullName}</div>
-            ) : null}
+              {formik.touched.fullName && formik.errors.fullName ? (
+                <div>{formik.errors.fullName}</div>
+              ) : null}
+            </InputErrorWrapper>
+            <InputStatus status={!formik.errors.fullName} />
           </InputWrapper>
 
           {messages.map(item => {
@@ -108,14 +105,16 @@ function Chat() {
                 {item.id === 2 ? (
                   <SpeechWrapper>
                     <SpeechBot>🤖</SpeechBot>
-                    <SpeechBubble>{item.message}</SpeechBubble>
+                    <SpeechBubble>
+                      Que satisfação, {formik.values.fullName}. {item.message}
+                    </SpeechBubble>
                   </SpeechWrapper>
                 ) : null}
               </div>
             );
           })}
-          <InputWrapper>
-            <label htmlFor="city">
+          <InputWrapper status={!formik.errors.city}>
+            <InputErrorWrapper>
               <input
                 id="city"
                 name="city"
@@ -125,10 +124,11 @@ function Chat() {
                 value={formik.values.city}
                 placeholder="Cidade"
               />
-            </label>
-            {formik.touched.city && formik.errors.city ? (
-              <div>{formik.errors.city}</div>
-            ) : null}
+              {formik.touched.city && formik.errors.city ? (
+                <div>{formik.errors.city}</div>
+              ) : null}
+            </InputErrorWrapper>
+            <InputStatus status={!formik.errors.city} />
           </InputWrapper>
 
           {messages.map(item => {
@@ -143,21 +143,23 @@ function Chat() {
               </div>
             );
           })}
-          <InputWrapper>
-            <InputMask
-              mask="99/99/9999"
-              id="birth"
-              name="birth"
-              type="birth"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.birth}
-              placeholder="00/00/0000"
-            />
-
-            {formik.touched.birth && formik.errors.birth ? (
-              <div>{formik.errors.birth}</div>
-            ) : null}
+          <InputWrapper status={!formik.errors.birth}>
+            <InputErrorWrapper>
+              <InputMask
+                mask="99/99/9999"
+                id="birth"
+                name="birth"
+                type="birth"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.birth}
+                placeholder="00/00/0000"
+              />
+              {formik.touched.birth && formik.errors.birth ? (
+                <div>{formik.errors.birth}</div>
+              ) : null}
+            </InputErrorWrapper>
+            <InputStatus status={!formik.errors.birth} />
           </InputWrapper>
 
           {messages.map(item => {
@@ -172,8 +174,8 @@ function Chat() {
               </div>
             );
           })}
-          <InputWrapper>
-            <label htmlFor="email">
+          <InputWrapper status={!formik.errors.email}>
+            <InputErrorWrapper>
               <input
                 id="email"
                 name="email"
@@ -183,10 +185,11 @@ function Chat() {
                 value={formik.values.email}
                 placeholder="seu@email.com"
               />
-            </label>
-            {formik.touched.email && formik.errors.email ? (
-              <div>{formik.errors.email}</div>
-            ) : null}
+              {formik.touched.email && formik.errors.email ? (
+                <div>{formik.errors.email}</div>
+              ) : null}
+            </InputErrorWrapper>
+            <InputStatus status={!formik.errors.email} />
           </InputWrapper>
 
           {messages.map(item => {
@@ -201,8 +204,8 @@ function Chat() {
               </div>
             );
           })}
-          <InputWrapper>
-            <label htmlFor="rating">
+          <InputWrapper status={!formik.errors.email}>
+            <InputErrorWrapper>
               <input
                 id="rating"
                 name="rating"
@@ -211,10 +214,11 @@ function Chat() {
                 onBlur={formik.handleBlur}
                 value={formik.values.rating}
               />
-            </label>
-            {formik.touched.rating && formik.errors.rating ? (
-              <div>{formik.errors.rating}</div>
-            ) : null}
+              {formik.touched.rating && formik.errors.rating ? (
+                <div>{formik.errors.rating}</div>
+              ) : null}
+            </InputErrorWrapper>
+            <InputStatus status={!formik.errors.birth} />
           </InputWrapper>
 
           <SaveBtn type="submit">Salvar</SaveBtn>

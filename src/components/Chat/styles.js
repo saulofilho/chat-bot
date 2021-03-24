@@ -50,7 +50,7 @@ export const SpeechBubble = styled.div`
   position: relative;
   background: #fff;
   border-radius: 0.4em;
-  width: 100%;
+  width: auto;
   height: 100%;
   font-size: 14px;
   padding: 10px;
@@ -99,11 +99,15 @@ export const InputWrapper = styled.div`
   position: relative;
   background: #fff;
   border-radius: 0.4em;
-  width: 100%;
+  width: auto;
   height: 100%;
   font-size: 14px;
   padding: 10px;
   margin: 10px 30px 10px 10px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-flow: row;
 
   :after {
     content: '';
@@ -116,4 +120,28 @@ export const InputWrapper = styled.div`
     margin-top: -10px;
     margin-right: -10px;
   }
+
+  input {
+    padding: 10px 5px;
+    border: ${props => (props.status ? '1px solid #000' : '1px solid red')};
+    color: ${props => (props.status ? '1px solid #000' : '1px solid red')};
+    border-radius: 3px;
+    width: 100%;
+  }
+`;
+
+export const InputStatus = styled.div`
+  border: 12px solid transparent;
+  border-left-color: ${props => (props.status ? 'green' : 'red')};
+  border-right: 0;
+  margin: 0 20px;
+`;
+
+export const InputErrorWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+  color: red;
+  font-size: 12px;
 `;
