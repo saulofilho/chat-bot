@@ -1,11 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import Header from '../../Header';
+import Chat from '../../Chat';
 
-describe('Testing Header component', () => {
+describe('Testing Chat component', () => {
   it('should render correctly', () => {
-    const wrapper = render(<Header />);
+    const wrapper = render(<Chat />);
 
     expect(wrapper).toMatchSnapshot();
   });
