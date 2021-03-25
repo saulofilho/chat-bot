@@ -28,8 +28,8 @@ export const Content = styled.div`
 
   form {
     display: flex;
-    overflow: scroll;
-    height: 500px;
+    overflow: auto;
+    height: 400px;
     justify-content: flex-start;
     align-items: center;
     flex-flow: column;
@@ -51,7 +51,7 @@ export const SpeechBubble = styled.div`
   background: #fff;
   border-radius: 0.4em;
   width: auto;
-  height: 100%;
+  height: auto;
   font-size: 14px;
   padding: 10px;
   margin: 10px 10px 10px 30px;
@@ -100,13 +100,13 @@ export const InputWrapper = styled.div`
   background: #fff;
   border-radius: 0.4em;
   width: auto;
-  height: 100%;
+  height: auto;
   font-size: 14px;
   padding: 10px;
   margin: 10px 30px 10px 10px;
   display: flex;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-start;
   flex-flow: row;
 
   :after {
@@ -134,7 +134,7 @@ export const InputStatus = styled.div`
   border: 12px solid transparent;
   border-left-color: ${props => (props.status ? 'green' : 'red')};
   border-right: 0;
-  margin: 0 20px;
+  margin: 5px 20px 0;
 `;
 
 export const InputErrorWrapper = styled.div`
@@ -144,4 +144,51 @@ export const InputErrorWrapper = styled.div`
   flex-flow: column;
   color: red;
   font-size: 12px;
+`;
+
+export const InputErrorWrapperStars = styled.div`
+  label {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: row;
+    width: 100%;
+  }
+
+  input {
+    /* position: absolute;
+    top: 0;
+    clip: rect(1px, 1px, 1px, 1px);
+    left: 0; */
+    width: 10px;
+    height: 10px;
+    padding: 0 10px;
+  }
+
+  input:checked ~ svg {
+    fill: yellow;
+  }
+`;
+
+export const AutoCompleteOptions = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-flow: column;
+  font-size: 12px;
+  width: 100%;
+  height: 100%;
+`;
+
+export const CityButton = styled.button`
+  border: unset;
+  background: transparent;
+  padding: 10px;
+  width: 100%;
+  text-align: left;
+
+  :hover {
+    background: lightgray;
+  }
 `;

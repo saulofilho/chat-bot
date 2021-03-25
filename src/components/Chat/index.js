@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import InputMask from 'react-input-mask';
 import { messages } from '../../utils/messages';
 import api from '../../services/api';
+import apiBrazilCity from '../../services/apiBrazilCity';
 
 import {
   ChatToggle,
@@ -15,10 +16,17 @@ import {
   InputWrapper,
   InputStatus,
   InputErrorWrapper,
+  InputErrorWrapperStars,
+  AutoCompleteOptions,
+  CityButton,
 } from './styles';
 
 function Chat() {
   const [isToggled, setIsToggled] = useState(false);
+  const [brazilCities, setBrazilCities] = useState([]);
+  const [searchCity, setSearchCity] = useState('');
+  const wrapperRef = useRef(null);
+  const [display, setDisplay] = useState('');
 
   const toggle = () => {
     setIsToggled(!isToggled);
@@ -30,7 +38,7 @@ function Chat() {
       city: '',
       birth: '',
       email: '',
-      rating: 0,
+      rating: '',
     },
     validationSchema: Yup.object({
       fullName: Yup.string()
@@ -61,6 +69,43 @@ function Chat() {
         });
     },
   });
+
+  const fetchBrazilCities = async () => {
+    await apiBrazilCity
+      .get()
+      .then(response => {
+        const citySelected = response.data.map(item => item.nome);
+
+        setBrazilCities([...citySelected]);
+      })
+      .catch(err => {
+        alert('Ops! Algo deu errado com a requisição.', err.message);
+      });
+  };
+
+  const handleClickOutside = event => {
+    const { current: wrap } = wrapperRef;
+    if (wrap && !wrap.contains(event.target)) {
+      setDisplay(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchBrazilCities();
+
+    window.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      window.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  const updateAutoComplete = item => {
+    setSearchCity(item);
+    setDisplay(false);
+    console.log('iiiiteeem', item);
+  };
+  console.log('searchCity', searchCity);
 
   return (
     <>
@@ -126,7 +171,31 @@ function Chat() {
                   onBlur={formik.handleBlur}
                   value={formik.values.city}
                   placeholder="Cidade"
+                  onClick={() => setDisplay(!display)}
                 />
+                {console.log('formika', formik)}
+                {display && (
+                  <AutoCompleteOptions>
+                    {brazilCities
+                      .filter(item =>
+                        item
+                          .toLowerCase()
+                          .includes(formik.values.city.toLowerCase())
+                      )
+                      .map((item, i) => {
+                        return (
+                          <CityButton
+                            // eslint-disable-next-line react/no-array-index-key
+                            key={i}
+                            onClick={() => updateAutoComplete(item)}
+                            type="button"
+                          >
+                            <p>{item}</p>
+                          </CityButton>
+                        );
+                      })}
+                  </AutoCompleteOptions>
+                )}
                 {formik.touched.city && formik.errors.city ? (
                   <div>{formik.errors.city}</div>
                 ) : null}
@@ -220,20 +289,114 @@ function Chat() {
             })}
           {formik.touched.email && !formik.errors.email ? (
             <InputWrapper status={!formik.errors.email}>
-              <InputErrorWrapper>
-                <input
-                  id="rating"
-                  name="rating"
-                  type="rating"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.rating}
-                />
+              <InputErrorWrapperStars>
+                <label htmlFor="rating">
+                  <input
+                    id="rating"
+                    name="rating"
+                    type="radio"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={5}
+                  />
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#393939"
+                    strokeWidth="1"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                  <input
+                    id="rating"
+                    name="rating"
+                    type="radio"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={4}
+                  />
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#393939"
+                    strokeWidth="1"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                  <input
+                    id="rating"
+                    name="rating"
+                    type="radio"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={3}
+                  />
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#393939"
+                    strokeWidth="1"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                  <input
+                    id="rating"
+                    name="rating"
+                    type="radio"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={2}
+                  />
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#393939"
+                    strokeWidth="1"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                  <input
+                    id="rating"
+                    name="rating"
+                    type="radio"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={1}
+                  />
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#393939"
+                    strokeWidth="1"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                  </svg>
+                </label>
                 {formik.touched.rating && formik.errors.rating ? (
                   <div>{formik.errors.rating}</div>
                 ) : null}
-              </InputErrorWrapper>
-              <InputStatus status={!formik.errors.birth} />
+              </InputErrorWrapperStars>
+              <InputStatus status={!formik.errors.rating} />
             </InputWrapper>
           ) : null}
 
