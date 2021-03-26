@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 import React, { useState, useEffect, useRef } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -24,7 +25,6 @@ import {
 function Chat() {
   const [isToggled, setIsToggled] = useState(false);
   const [brazilCities, setBrazilCities] = useState([]);
-  const [searchCity, setSearchCity] = useState('');
   const wrapperRef = useRef(null);
   const [display, setDisplay] = useState('');
 
@@ -100,17 +100,10 @@ function Chat() {
     };
   }, []);
 
-  const updateAutoComplete = item => {
-    setSearchCity(item);
-    setDisplay(false);
-    console.log('iiiiteeem', item);
-  };
-  console.log('searchCity', searchCity);
-
   return (
     <>
       <ChatToggle onClick={() => toggle()}>
-        {!isToggled ? 'Olá' : 'x'}
+        {!isToggled ? 'Olá' : 'Tchau'}
       </ChatToggle>
       <Content hide={isToggled}>
         <form onSubmit={formik.handleSubmit}>
@@ -173,7 +166,7 @@ function Chat() {
                   placeholder="Cidade"
                   onClick={() => setDisplay(!display)}
                 />
-                {console.log('formika', formik)}
+
                 {display && (
                   <AutoCompleteOptions>
                     {brazilCities
@@ -187,7 +180,7 @@ function Chat() {
                           <CityButton
                             // eslint-disable-next-line react/no-array-index-key
                             key={i}
-                            onClick={() => updateAutoComplete(item)}
+                            onClick={() => formik.setFieldValue('city', item)}
                             type="button"
                           >
                             <p>{item}</p>
