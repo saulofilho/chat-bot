@@ -102,7 +102,7 @@ function Chat() {
 
   return (
     <>
-      <ChatToggle onClick={() => toggle()}>
+      <ChatToggle data-testid="div-toggle" onClick={() => toggle()}>
         {!isToggled ? 'Olá' : 'Tchau'}
       </ChatToggle>
       <Content hide={isToggled}>

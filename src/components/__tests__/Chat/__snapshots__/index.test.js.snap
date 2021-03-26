@@ -1,12 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Testing Chat component should render correctly 1`] = `
+exports[`testing chat component should render correctly 1`] = `
 Object {
   "asFragment": [Function],
   "baseElement": <body>
     <div>
       <div
         class="sc-bdfBwQ gzzPqc"
+        data-testid="div-toggle"
       >
         Olá
       </div>
@@ -65,6 +66,7 @@ Object {
   "container": <div>
     <div
       class="sc-bdfBwQ gzzPqc"
+      data-testid="div-toggle"
     >
       Olá
     </div>
