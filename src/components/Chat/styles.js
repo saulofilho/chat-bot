@@ -147,6 +147,13 @@ export const InputErrorWrapper = styled.div`
 `;
 
 export const InputErrorWrapperStars = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+  color: red;
+  font-size: 12px;
+
   label {
     position: relative;
     display: flex;
@@ -168,6 +175,18 @@ export const InputErrorWrapperStars = styled.div`
 
   input:checked ~ svg {
     fill: yellow;
+  }
+
+  @media (max-width: 768px) {
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    input {
+      width: 5px;
+      height: 5px;
+    }
   }
 `;
 
