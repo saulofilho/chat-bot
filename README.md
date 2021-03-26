@@ -38,6 +38,45 @@ $ yarn start
 [vceditconfig]: https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig
 [vceslint]: https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
 
+### API Rest
+
+Endpoint: `https://6058bdc9c3f49200173aecbc.mockapi.io/:endpoint`
+
+Get users: `GET /`
+Get user by code: `GET /users/:id`
+Post an user: `POST /users`
+Put an user: `PUT /users/:id`
+Delete an user: `DELETE /users/:id`
+
+By default the objects will be sorted by `id` in order to have the most important objects first.
+
+URL to query                   | Description
+------------------------------ | ---------------------------
+<code>GET</code> `/`           | Return `200`.
+<code>GET</code> `/users/:id`| Get an user by code eg. `/users/1`
+<code>GET</code> `/users`      | Return a list of `Users`.
+<code>POST</code> `/users/:id`     | Post an user `Users`.
+<code>PUT</code> `/users/:id`      | Put an user `Users`.
+<code>DELETE</code> `/users/:id`   | Delete an user `Users`.
+
+### Example
+**Request**
+
+    GET /users/1
+
+**Return**
+``` json
+  {
+    "id": "1",
+    "createdAt": 1616704263,
+    "fullName": "Saulo",
+    "city": "Cuiabá",
+    "birth": "01/01/1990",
+    "email": "hello@saulofilho.com",
+    "rating": "5"
+  },
+```
+
 ### Creator
 
 **Saulo Filho**
