@@ -40,7 +40,7 @@ $ yarn start
 
 ### API Rest
 
-Endpoint: `https://6058bdc9c3f49200173aecbc.mockapi.io/:endpoint`
+Endpoint: `https://6058bdc9c3f49200173aecbc.mockapi.io/users`
 
 Get users: `GET /`
 Get user by code: `GET /users/:id`
