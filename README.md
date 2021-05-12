@@ -38,7 +38,7 @@ $ yarn start
 [vceditconfig]: https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig
 [vceslint]: https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
 
-### API Rest
+## API Rest
 
 Endpoint: `https://6058bdc9c3f49200173aecbc.mockapi.io/users`
 
